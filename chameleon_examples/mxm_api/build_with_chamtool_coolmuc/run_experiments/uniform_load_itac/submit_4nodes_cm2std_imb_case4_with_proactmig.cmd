@@ -1,0 +1,77 @@
+#!/bin/bash
+#SBATCH -J proactmig_imb4_uni_itac
+#SBATCH -o job_output/out_%j_imb_chamtool_itac_proactmig_case4.txt
+#SBATCH -e job_output/err_%j_imb_chamtool_itac_proactmig_case4.txt
+#SBATCH -D ./
+#SBATCH --get-user-env
+#SBATCH --clusters=cm2
+#SBATCH --partition=cm2_std
+#SBATCH --qos=cm2_std
+#SBATCH --time=02:00:00
+#SBATCH --nodes=4
+#SBATCH --ntasks-per-node=2
+#SBATCH --cpus-per-task=13
+##SBATCH --mem=MaxMemPerNode
+
+source /etc/profile.d/modules.sh
+module load slurm_setup
+
+module use ~/.modules
+module use ~/local_libs/spack/share/spack/modules/linux-sles15-haswell
+
+module unload spack/staging/20.2.2
+module unload intel-mpi/2019.8.254
+module unload intel-mpi/2019-intel
+module unload intel/19.0.5
+module unload intel-mkl/2019
+module load intel-oneapi/2021.1
+module load itac
+
+module load hwloc-2.4.1-oneapi-2021.1-rrkvihp
+module load libffi-3.3-oneapi-2021.1-3vomiwb
+module load cereal-1.3.0-gcc-7.5.0-jwb3bux # built by spack
+module load boost-1.76.0-gcc-7.5.0-fromrfo ## built with local-spack
+module load hdf5-1.10.4         ## built with oneapi/2021
+module load armadillo-10.4.0    ## built with oneapi/2021
+module load ensmallen-2.16.2    ## built with oneapi/2021
+module load mlpack-3.4.2        ## built with oneapi/2021
+module load chamtool_pred3_mig1_itac
+
+## do not have permission
+## module use -a /lrz/sys/share/modules/extfiles
+## module add likwid/modified
+
+# export KMP_AFFINITY=verbose
+unset KMP_AFFINITY
+export OMP_PLACES=cores
+export OMP_PROC_BIND=true
+export I_MPI_PIN=1
+export I_MPI_PIN_DOMAIN=auto
+
+ulimit -s unlimited
+
+## for new mpi version which does not support a sufficient number of tags
+export MPIR_CVAR_CH4_OFI_TAG_BITS=30
+export MPIR_CVAR_CH4_OFI_RANK_BITS=8
+
+## for chameleon tool configs
+export OMP_NUM_THREADS=13
+export MIN_REL_LOAD_IMBALANCE_BEFORE_MIGRATION=0.1
+export MAX_TASKS_PER_RANK_TO_MIGRATE_AT_ONCE=1
+export PERCENTAGE_DIFF_TASKS_TO_MIGRATE=0.3
+export MXM_EXAMPLE=1
+export EST_NUM_ITERS=5
+export TIME2TRAIN=1
+export CHAMELEON_TOOL=1
+export CHAMELEON_TOOL_SUPPORT=1
+export CHAMELEON_TOOL_LIBRARIES=/dss/dsshome1/lxc0D/ra56kop/chameleon-scripts/cham_tools/load_pred_tool/build/libtool.so
+export VT_LOGFILE_PREFIX=/dss/dsshome1/lxc0D/ra56kop/chameleon-scripts/cham_examples/mxm_api/build_with_chamtool_coolmuc/run_experiments/uniform_load_itac/traces
+export LOG_DIR=/dss/dsshome1/lxc0D/ra56kop/chameleon-scripts/cham_examples/mxm_api/build_with_chamtool_coolmuc/run_experiments/uniform_load_itac/logs/imb_case4
+
+export TASKS_PER_RANK="800,100,50,50,50,50,90,90"
+NUM_TASKS="800 100 50 50 50 50 90 90"
+MATRIX_SIZE=384
+
+
+echo "LD_PRELOAD=$VT_SLIB_DIR/libVT.so mpirun -n ${SLURM_NTASKS} /dss/dsshome1/lxc0D/ra56kop/chameleon-scripts/cham_examples/mxm_api/build_with_chamtool_coolmuc/mxm_api ${MATRIX_SIZE} ${NUM_TASKS}"
+LD_PRELOAD=$VT_SLIB_DIR/libVT.so mpirun -n ${SLURM_NTASKS} /dss/dsshome1/lxc0D/ra56kop/chameleon-scripts/cham_examples/mxm_api/build_with_chamtool_coolmuc/mxm_api ${MATRIX_SIZE} ${NUM_TASKS}
