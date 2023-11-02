@@ -1,0 +1,50 @@
+\chapter{Conclusion}
+\label{ch:Conclusion}
+
+%\noindent
+
+The thesis revolves around dynamic load-balancing problems for task-based parallel applications in distributed memory machines. Work stealing is a conventional solution, but stealing operations might be too late due to the overhead of communication over nodes in HPC clusters. An improvement method is reactive load balancing that we attempt to offload tasks beforehand instead of stealing. This idea is based on the execution scheme of task-based programming models. We separate the view of parallel tasks and computing resources. Tasks are queued and scheduled into threads for executing, where one thread/core is dedicated ($Tcomm$) to overlap computation and communication across nodes. Reactive load balancing exploits this dedicated thread to monitor the execution speed of each process continuously. Therefore, we can decide to offload tasks reactively by $Tcomm$ to balance the load earlier.\\
+
+This work focuses on the reactive approach and improves it further by proposing a new proactive approach. In detail, we first introduce a performance model for work stealing and reactive load balancing. We show that these approaches are limited at runtime, depending significantly on the imbalance context, where the influence parameters contain the number of tasks ($T$), processes ($P$), imbalance ratio level ($R_{imb}$) caused by performance slowdown in some of the processes ($S_{P}$), and the communication overhead via transmission time/delay of task migration. The model shows the efficiency bound of reactive approach in particular and dynamic load balancing in general. Second, we contribute a proactive balancing approach as well as a proactive balancing scheme upon task-based programming models. The proposed approach exploits $Tcomm$ for extended duties, including task characterization, online load prediction, and proactive task offloading. The main purpose is to generate a prediction model as an add-on of $Tcomm$, which helps to provide prediction knowledge for load balancing. Afterward, we can force it to perform task offloading proactively. These points imply that we can estimate how many tasks should be offloaded at once and migrate them to which potential victims.\\
+
+Regarding implementation, we present a simple simulator and deploy the approach in a task-based library called Chameleon. The evaluation is performed with experiments on three different clusters. There are two types of applications: micro-benchmarks and realistic use cases, i.e., HPC simulations in terms of adaptive mesh refinement and dynamic molecular simulations. Our results confirm the benefits in high imbalance cases. Concretely, the speedup is gained from $1.5\times$ to $3.5\times$ between the thesis's solution compared to the baseline, work stealing, and reactive approach. More importantly, this work has opened a new direction for co-scheduling tasks across multiple applications as a long-term vision.
+
+
+%
+%\section{Conclusions From Question Q3:}
+%\paragraph{Q3:
+%\begin{enumerate}[label=Q\arabic*]
+%        \setcounter{enumi}{2}
+%    \item --
+%        How can such a model be applied to concrete system architectures for \pne management of \glspl*{HPC system}?}
+        %%% ANSWER: A guide to create concrete instances of the \gls*{OIEPrefmodel}, named \glspl*{OIEParch}.
+%\end{enumerate}
+%Conclusions:
+%\begin{itemize}
+%    \item To answer Question~3, a method for the application of the reference model is needed.
+%        Such method is constructed and presented in Section~\ref{sec:Arch-Method}.
+%    \item The method is tailored towards applying the \gls*{OIEPrefmodel} for the construction of \glspl*{OIEParch}.
+%\end{itemize}
+%
+%\begin{itemize}
+%    \item To model existing \glspl*{HPC system} using the \gls*{OIEPrefmodel}
+%        and construct \glspl*{OIEParch} for them, their structure has to be analyzed.
+%    \item The identified components then have to be mapped to the building blocks provided by the reference model.
+%    \item The result is a transparent and understandable model of the \pne management system for a given \gls*{HPC system}.
+%    \item This process is applied and its feasibility shown.
+%\end{itemize}
+%With the conclusions from Questions Q2 and~Q3, the solution to Question~Q1 is
+%supplemented and finalized.
+%The method followed in this work is concluded and the contributions fulfilled.
+%
+
+%~\\\\
+%\paragraph{Concluding Remark}
+%~\\\\
+%With the presentation of the contributions and the conclusions to the problem
+%statement and research questions, the overall problem statement is satisified.
+%This work is a stepping stone towards modeling \pne management systems of
+%\glspl*{HPC system}, by providing the first \gls*{ReferenceModel} for describing
+%hierarchical \pne management system for \glspl*{HPC system}:
+%the \acrfull*{OIEP} \glslink*{OIEPrefmodel}{reference model}.
+%END OF WORK

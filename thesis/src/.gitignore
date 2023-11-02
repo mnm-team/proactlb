@@ -1,0 +1,13 @@
+build/
+*.glg
+*.gls
+*.slg
+*.slo
+*.sls
+*.log
+*.gz
+*.glsdefs
+*._.DS_Store
+*.DS_Store
+*._main.pdf
+main.out

@@ -1,0 +1,346 @@
+% This title is simplyfied from the verbose mnmarbeit.sty
+%  + Matthias Maiterth 2017-10-10
+%  + Empty lines are important!
+\ProvidesPackage{styles/Dissertation}[2017/10/10 v0.8]
+\RequirePackage{graphicx}
+\RequirePackage{xcolor}
+\RequirePackage{hyperref}
+\RequirePackage{wedn}
+\colorlet{linkblue}{blue!60!black}
+    \hypersetup{
+			colorlinks	=true,
+			linktoc			=page,
+			linkcolor		=linkblue,
+			citecolor		=linkblue,	% green color of citation links (bibliography)
+			filecolor		=cyan,			% color of file links
+			urlcolor		=magenta,		% color of URL links (mail, web)
+			%linkbordercolor=false,	% hyperlink border will be red
+}
+\RequirePackage{nextpage}
+\RequirePackage[acronym,nopostdot,symbols,toc,automake]{glossaries}
+
+\RequirePackage[]{tocbibind}
+\RequirePackage{xparse}
+\RequirePackage{xspace}
+\RequirePackage{marginnote}
+
+\newcommand*{\project}[1]{\gdef\@project{#1}}
+\newcommand*{\supervisorA}[1]{\gdef\@supervisorA{#1}}
+\newcommand*{\@supervisorA}{\texttt{\string\supervisorA} currently not set. Please fix this.}
+\newcommand*{\supervisorB}[1]{\gdef\@supervisorB{#1}}
+\newcommand*{\@supervisorB}{\texttt{\string\supervisorB} currently not set. Please fix this.}
+\newcommand*{\supervisorC}[1]{\gdef\@supervisorC{#1}}
+\newcommand*{\@supervisorC}{\texttt{\string\supervisorC} currently not set. Please fix this.}
+\newcommand*{\TerminRigor}[1]{\gdef\@TerminRigor{#1}}
+\newcommand*{\@TerminRigor}{\texttt{\string\TerminRigor} currently not set. Please fix this.}
+
+\DeclareRobustCommand\onedot{\futurelet\@let@token\@onedot}
+\def\@onedot{\ifx\@let@token.\else.\null\fi\xspace}
+
+\let\@advisorlist\@empty
+\def\advisor#1{ \g@addto@macro\@advisorlist{\hbox{#1}} }
+\def\advisors{
+    \parbox[t]{1.2\linewidth}{\@advisorlist}
+}
+
+\newcommand*{\thesis}[1]{\gdef\@thesis{#1}}
+\newcommand*{\@thesis}{\texttt{\string\thesis} currently not set. Please fix this.}
+\newcommand*{\thesisDeutsch}[1]{\gdef\@thesisDeutsch{#1}}
+\newcommand*{\@thesisDeutsch}{\texttt{\string\thesisDeutsch} currently not set. Please fix this.}
+\newcommand*{\abgabeTagZahl}{\gdef\@abgabeTagZahl}
+\newcommand*{\@abgabeTagZahl}{\texttt{\string\abgabeTagZahl} currently not set. Please fix this.}
+\newcommand*{\abgabeMonatText}{\gdef\@abgabeMonatText}
+\newcommand*{\@abgabeMonatText}{\texttt{\string\abgabeMonatText} currently not set. Please fix this.}
+\newcommand*{\abgabeJahrZahl}{\gdef\@abgabeJahrZahl}
+\newcommand*{\@abgabeJahrZahl}{\texttt{\string\abgabeJahrZahl} currently not set. Please fix this.}
+% ---------------------------------------------------------------
+% END OF REDEFINITION OF TITLEPAGE
+% ---------------------------------------------------------------
+\renewcommand*{\maketitle}{
+\pdfbookmark[0]{Title}{Title}
+
+\begin{titlepage}
+
+% ----------------------------------
+% First Page
+% ----------------------------------
+\thispagestyle{empty}
+
+\begin{center}
+
+\vspace*{-2cm}
+
+{\Huge INSTITUT F\"UR INFORMATIK\\[1mm]}
+DER LUDWIG--MAXIMILIANS--UNIVERSIT\"AT M\"UNCHEN\\
+
+\vspace*{1cm}
+
+\includegraphics[width=0.3\textwidth]{styles/lmu_siegel}
+
+\vspace*{2cm}
+
+{\Large \textbf{\@thesis}\\[1mm]
+an der Fakult\"at f\"ur Mathematik, Informatik und Statistik \\[1mm]
+der Ludwig-Maximilians-Universit\"at M\"unchen}\\
+
+\vspace{2.0cm}
+{\renewcommand{\baselinestretch}{1.1}\Huge\bfseries \@title \par}
+
+\vspace{1.0cm}
+
+{\large eingereicht von\\[2mm]\LARGE \@author\\[2mm]
+ \large am:~\@abgabeTagZahl.~\@abgabeMonatText~\@abgabeJahrZahl}
+ 
+\end{center}
+
+\newpage
+
+% ----------------------------------
+% Second Page
+% ----------------------------------
+\thispagestyle{empty}
+\cleardoublepage
+
+% ----------------------------------
+% Third Page (Copy of first + supervisor + advisors + date)
+% ----------------------------------
+\thispagestyle{empty}
+
+\begin{center}
+
+\vspace*{-2cm}
+
+{\Huge INSTITUT F\"UR INFORMATIK\\[1mm]}
+DER LUDWIG--MAXIMILIANS--UNIVERSIT\"AT M\"UNCHEN\\
+
+\vspace*{1cm}
+
+\includegraphics[width=0.3\textwidth]{styles/lmu_siegel}
+
+\vspace*{2cm}
+
+{\Large \textbf{\@thesis}\\[1mm]
+an der Fakult\"at f\"ur Mathematik, Informatik und Statistik \\[1mm]
+der Ludwig-Maximilians-Universit\"at M\"unchen}\\
+
+\vspace{2.0cm}
+{\renewcommand{\baselinestretch}{1.1}\Huge\bfseries \@title \par}
+
+\vspace{1.0cm}
+
+{\large eingereicht von\\[2mm]\LARGE \@author\\[2mm]
+ \large am:~\@abgabeTagZahl.~\@abgabeMonatText~\@abgabeJahrZahl}
+
+\vspace*{1.2cm}
+
+\parbox{1cm}{
+\begin{large}
+\begin{tabbing}
+Erstberichterstatter:\quad\quad
+\=\@supervisorA \\[2mm]
+Zweiberichterstatter:
+\>\@supervisorB \\[2mm]
+%Drittberichterstatter:
+\>\@supervisorC \\[10mm]
+% insert the date of pruefung/defense
+Tag der m\"undlichen Pr\"ufung:\quad\quad
+\=\@TerminRigor\\ % abgabeTagZahl.~\abgabeMonatText~\abgabeJahrZahl\\
+\end{tabbing}
+\end{large}
+    \vspace{-1cm}
+}\\
+
+\end{center}
+
+\end{titlepage}
+}
+\newcommand*{\makeabstract}[3][]{
+\cleardoublepage
+%\bigskip
+%\thispagestyle{headings}
+%\topskip0pt\vspace{0.5\textheight
+\vspace*{.3\textheight}
+\section*{#2}
+\ifthenelse{\equal{\detokenize{#1}}{\detokenize{nottoc}}}
+    {}%
+    {\addcontentsline{toc}{chapter}{#2}}
+%\quotation
+%\noindent
+\input{#3}
+%\endquotation
+\vspace*{\fill}
+}
+\newcommand*{\makeack}[3][]{
+\cleardoublepage
+%\bigskip
+%\thispagestyle{headings}
+%\topskip0pt\vspace{0.5\textheight
+\vspace*{.05\textheight}
+\section*{#2}
+\ifthenelse{\equal{\detokenize{#1}}{\detokenize{nottoc}}}
+    {}%
+    {\addcontentsline{toc}{chapter}{#2}}
+%\quotation
+%\noindent
+\bigskip
+\input{#3}
+%\endquotation
+\vspace*{\fill}
+}
+\newcommand*{\makeerklaerung}{
+\newpage
+\cleardoublepage
+
+\thispagestyle{plain}
+
+\begin{large}
+
+\vspace*{2cm}
+
+% ----------------------------------
+% Page: Signature
+% ----------------------------------
+\begin{center}
+\large{\textbf{Eidesstattliche Versicherung}}
+\linebreak
+    (Siehe Promotionsordnung vom 12.07.11, \S 8, Abs.2, Pkt.5)
+\end{center}
+
+\noindent
+Hiermit erkl\"are ich an Eidesstatt, dass die Dissertation von mir
+\newline
+selbstst\"andig, ohne unerlaubte Beihilfe angefertigt ist.
+
+\vspace{1cm}
+\noindent
+\dashuline{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~}
+    \begin{picture}(0,0)
+        \put(-170,0){\Large{\wedn{Chung, Minh}}}
+    \end{picture}
+\vspace{0.2cm}
+\newline
+Name, Vorname
+
+\vspace{0.5cm}
+\noindent
+\dotuline{~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~}
+    \begin{picture}(0,0)
+        \put(-150,0){\large{\wedn{München, den 07.01.2024}}}
+    \end{picture}
+\newline
+\hspace*{1cm}Ort, Datum
+
+\hspace*{0.45\textwidth}
+\dotfill\\
+\hspace*{\fill}
+\textit{(Unterschrift des Doktoranden)}
+\hspace*{0.025\textwidth}
+    \begin{picture}(0,0)
+        \put(-180,20){\Large{\wedn{}}}
+    \end{picture}
+
+\end{large}
+}
+\makeatletter
+\def\@roman#1{\romannumeral#1}
+\makeatother
+
+% ---------------------------------------------------------------
+% END OF REDEFINITION OF TITLEPAGE
+% ---------------------------------------------------------------
+
+\let\oldfrontmatter\frontmatter
+\renewcommand{\frontmatter}{
+    \oldfrontmatter
+}
+\let\oldmainmatter\mainmatter
+\renewcommand{\mainmatter}{
+    \oldmainmatter
+}
+\let\oldbackmatter\backmatter
+\renewcommand{\backmatter}{
+    \oldbackmatter
+}
+
+\DeclareDocumentCommand{\newdualentry}{ O{} O{} m m m m } {
+  \newglossaryentry{gls-#3}{name={#5},text={#5\glsadd{#3}},
+    description={#6},#1
+  }
+  \makeglossaries
+  \newacronym[see={[{\newline}Glossary:]{gls-#3}},#2]{#3}{#4}{#5\glsadd{gls-#3}}
+}
+
+\newcommand*{\blankpage}{
+\pagestyle{plain}
+\vspace*{\fill}
+{\centering Intentionally left blank.\par}
+\vspace{\fill}}
+
+\newcommand*{\chaptertoc}{
+    \vspace{5pt}\hrule\vspace{6pt}
+    \etocsettocstyle{}{}
+    \etocsetnexttocdepth{2} % I think this is better
+    \localtableofcontents
+    \vspace{10pt}\hrule\vspace{6pt}
+    \bigskip
+    \noindent
+}
+
+\newcommand*{\chaptertoclist}{
+    \begingroup
+    \etocsettocstyle{}{}
+    \etocsetstyle{section}
+    {\begin{itemize}\setlength{\itemsep}{1pt}}
+        {\item}
+        {\etocname}
+    {\end{itemize}\noindent}
+    \etocsetstyle{subsection}{WRONG SCOPE}{}{}{}
+    \etocsetnexttocdepth{1}
+    \localtableofcontents
+    \endgroup
+}
+\newcommand*{\sectiontoclist}{
+    \begingroup
+    \etocsettocstyle{}{}
+    \etocsetstyle{section}{WRONG SCOPE}{}{}{}
+    \etocsetstyle{subsection}
+    {\begin{itemize}\setlength{\itemsep}{1pt}}
+        {\item}
+        {\etocname}
+    {\end{itemize}\noindent}
+    \etocsetnexttocdepth{2}
+    \localtableofcontents
+    \endgroup
+}
+
+% This should be used within ever subsection with subsubsection
+\newcommand*{\subsectiontoclist}{
+    \begingroup
+    \etocsettocstyle {}{}
+    \etocsetstyle{subsection}{subsectiontoclist: WRONG SCOPE}{}{}{}
+    \etocsetstyle{subsubsection}
+    {\begin{itemize}\setlength{\itemsep}{1pt}}
+        {\item}
+        {\etocname}
+    {\end{itemize}\noindent}
+    \etocsetnexttocdepth{3}
+    \localtableofcontents
+    \endgroup
+}
+
+% This should be used with every paragraph list
+\newcommand*{\subsubsectiontoclist}{
+    \begingroup
+    \etocsettocstyle {}{}
+    \etocsetstyle{subsubsection}{subsubsectiontoclist: WRONG SCOPE}{}{}{}
+    \etocsetstyle{paragraph}
+    {\begin{itemize}\setlength{\itemsep}{1pt}}
+        {\item}
+        {\etocname}
+    {\end{itemize}\noindent}
+    \etocsetnexttocdepth{4}
+    \localtableofcontents
+    \endgroup
+}
+
+\endinput

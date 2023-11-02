@@ -1,0 +1,26 @@
+\section{Research Questions}
+\label{sec:intro_res_ques}
+\index{Intro!Research Questions}
+
+% in Section \ref{sec:intro_prob_form_motiv}
+Based on the motivation above, this thesis focuses on the following two main research questions (RQs).
+\begin{itemize}
+	\item \textbf{RQ1: How can we model the behavior of reactive load balancing to understand its limits in distributed memory systems?}
+	\item \textbf{RQ2: How can we proactively balance the load of task parallel applications at runtime?}
+\end{itemize}
+
+RQ1 indicates a performance model to analyze the limit of reactive load balancing as well as work stealing. Due to the overhead of balancing operations or task migration, they might reach a limit if actions are late and insufficient. The answer of RQ1 supports in-depth analysis and leads to a new approach mentioned in RQ2.\\
+
+RQ2 introduces a novel proactive load balancing approach, where ``proactive'' means that task migration will be anticipated with prediction information. We use prediction information to estimate the number of tasks and potential victims for migrating tasks. Unlike work stealing or reactive load balancing, our approach is controlled proactively. Tasks can be migrated earlier when we have knowledge about load values.\\
+
+To answer RQ2 comprehensively, we address two sub-questions (SQs):
+\begin{itemize}
+	\item SQ1: How can we predict the load of tasks at runtime to support proactive load balancing?
+	\item SQ2: How can we proactively co-schedule tasks to balance the load?
+\end{itemize}
+
+In order to perform offloading tasks proactively, we need to know the load values of tasks and how much load is different between processes, indicating the difference between overloaded and underloaded values. SQ1 and SQ2 support each other to answer RQ2, detailing how proactive load balancing works. Typically, SQ1 asks for load prediction, which is necessary to calculate how much load is different. We can then determine which processes are potential and available for offloading tasks. SQ2 implies methods to guide task offloading, where ''co-schedule tasks`` implies not only how to migrate tasks among processes in an application to balance the load, but also migrate tasks across multiple applications to improve overall performance. The output of SQ1, predicted load values, is the input of SQ2. Importantly, the output of SQ2 comes to how many tasks should be migrated from which process to which process. In this thesis, ``approach'' implies a broader strategy and perspective that drives load balancing, while ``method'' refers to a structured procedure that is more specific and often includes steps to guide task offloading for load balancing.
+
+
+
+

@@ -1,0 +1,170 @@
+%%define
+\def\radius{6cm}
+
+\begin{tikzpicture}[
+    background rectangle/.style={fill=black!0},show background rectangle,
+    every node/.style={align=center, minimum height=1.5em, minimum width=1.5em,node distance=0pt},
+    three sided/.style={draw=none,
+        append after command={
+            [shorten <= -0.5\pgflinewidth]
+            ([shift={(-1.5\pgflinewidth,-0.5\pgflinewidth)}]\tikzlastnode.north east)
+            edge([shift={( 0.5\pgflinewidth,-0.5\pgflinewidth)}]\tikzlastnode.north west)
+            ([shift={( 0.5\pgflinewidth,-0.5\pgflinewidth)}]\tikzlastnode.north west)
+            edge([shift={( 0.5\pgflinewidth,+0.5\pgflinewidth)}]\tikzlastnode.south west)
+            ([shift={( 0.5\pgflinewidth,+0.5\pgflinewidth)}]\tikzlastnode.south west)
+            edge([shift={(-1.0\pgflinewidth,+0.5\pgflinewidth)}]\tikzlastnode.south east)
+        }
+    },
+    sepline/.style={draw=none, % adds a line on the left side!
+        append after command={
+            [shorten <= -0.0\pgflinewidth]
+            ([shift={( 0.0\pgflinewidth,-1.0\pgflinewidth)}]\tikzlastnode.north west)
+            edge([shift={( 0.0\pgflinewidth,+1.0\pgflinewidth)}]\tikzlastnode.south west)
+        }
+    }
+]
+\draw[white] (-1.0, 0.50) --
+             (12.0, 0.50) --
+             (12.0,-5.10) --
+             (-1.0,-5.10) --
+             (-1.0, 0.50);
+
+
+%\node[draw=black](dummy) at (-1,0){};
+%\node[draw=black](dummy) at (10,-6){};
+\def\cha{1.0cm};\def\wCh{2.5cm};\def\ChGap{.5cm};
+\node[minimum height=\cha, minimum width=\wCh](b00) at(0,0){};
+\node[minimum height=\cha, minimum width=\wCh,below=0.5cm of b00](l1){Context\\analysis};
+\node[minimum height=\cha, minimum width=\wCh,below=0.5cm of l1](l2){Functional\\specification};
+\node[minimum height=\cha, minimum width=\wCh,below=0.5cm of l2](l3){Design\\constraint};
+
+\node[minimum height=\cha, minimum width=\wCh,right=0.5cm of b00](h1){Technical\\assessment};
+\node[minimum height=\cha, minimum width=\wCh,right=0.1cm of h1](h2){Operational\\assessment};
+\node[minimum height=\cha, minimum width=\wCh,right=0.1cm of h2](h3){Economic\\assessment};
+
+%\node[minimum height=\cha, minimum width=\wCh,right=0.5cm of h3](xx){Textfor \\etevallll};
+
+
+\node[minimum height=\cha, minimum width=\wCh,draw=black,below=0.5cm of h1] (a1){Current\\operations};
+\node[minimum height=\cha, minimum width=\wCh,draw=black,below=0.5cm of a1] (a2){Proposed\\functions};
+\node[minimum height=\cha, minimum width=\wCh,draw=black,below=0.5cm of a2] (a3){Resource\\ specifcation};
+\draw[->] (a1) to (a2);
+\draw[->] (a2) to (a3);
+
+\node[minimum height=\cha, minimum width=\wCh,draw=black,below=0.5cm of h2] (b1){Problem\\statement};
+\node[minimum height=\cha, minimum width=\wCh,draw=black,below=0.5cm of b1] (b2){Performance\\parameters};
+\node[minimum height=\cha, minimum width=\wCh,draw=black,below=0.5cm of b2] (b3){usage\\conditions};
+\draw[->] (b1) to (b2);
+\draw[->] (b2) to (b3);
+
+\node[minimum height=\cha, minimum width=\wCh,draw=black,below=0.5cm of h3] (c1){Sensitivity\\factors};
+\node[minimum height=\cha, minimum width=\wCh,draw=black,below=0.5cm of c1] (c2){Expected\\impacts};
+\node[minimum height=\cha, minimum width=\wCh,draw=black,below=0.5cm of c2] (c3){expected\\costs};
+\draw[->] (c1) to (c2);
+\draw[->] (c2) to (c3);
+
+
+
+%\def\cha{1.0cm};\def\wCh{2cm};\def\ChGap{.5cm};
+%\node[minimum height=\cha, minimum width=\wCh,fill=lightgray,draw=black     ](c1)at(0,0){Chapter 1};
+%\def\chb{1.5cm}
+%\node[minimum height=\chb,minimum width=\wCh,fill=lightgray,draw=black,below=\ChGap of c1](c2){Chapter 2};
+%\def\chc{1.5cm}
+%\node[minimum height=\chc,minimum width=\wCh,fill=lightgray,draw=black,below=\ChGap of c2](c3){Chapter 3};
+%\def\chd{3.0cm}
+%\node[minimum height=\chd,minimum width=\wCh,fill=lightgray,draw=black,below=\ChGap of c3](c4){Chapter 4};
+%\def\che{3.5cm}
+%\node[minimum height=\che,minimum width=\wCh,fill=lightgray,draw=black,below=\ChGap of c4](c5){Chapter 5};
+%\def\chf{1.0cm}
+%\node[minimum height=\chf,minimum width=\wCh,fill=lightgray,draw=black,below=\ChGap of c5](c6){Chapter 6};
+%\def\chg{1.0cm}
+%\node[minimum height=\chg,minimum width=\wCh,fill=lightgray,draw=black,below=\ChGap of c6](c7){Chapter 7};
+%\def\chh{1.0cm}
+%\node[minimum height=\chh,minimum width=\wCh,fill=lightgray,draw=black,below=\ChGap of c7](c8){Chapter 8};
+%
+%\node[minimum height=\cha,minimum width=20cm, draw=black,right=1cm of c1  ](c1-x){}; %Box
+%\node[minimum height=\cha,minimum width=3cm,  right=1cm of c1  ](c1-0){Introduction}; %Intro basic terms for PS
+%\node[sepline,minimum height=\cha,minimum width=4cm,  right=of c1-0](c1-1){Problem Statement}; %PS
+%\node[sepline,minimum height=\cha,minimum width=4cm,  right=of c1-1](c1-2){Method}; %Methodical approach
+%\node[sepline,minimum height=\cha,minimum width=5cm,  right=of c1-2](c1-3){Contributions};  %Contributions
+%\node[sepline,minimum height=\cha,minimum width=2cm,  right=of c1-3](c1-4){Outline};
+%\node[sepline,minimum height=\cha,minimum width=2cm,  right=of c1-4](c1-s){Summary};
+%
+%\node[minimum height=\chb,minimum width=20cm,draw=black,right=1cm of c2  ](c2-x){}; %Box
+%\node[minimum height=\chb,minimum width=5cm, right=1cm of c2  ](c2-0){Motivation};
+%%\node[sepline ,minimum height=\chb,minimum width=3.75cm,right=of c2-0](c2-1){Power Management};
+%%\node[sepline,minimum height=\chb,minimum width=3.75cm, right=of c2-1](c2-2){P\&E software stack};
+%\node[sepline,minimum height=\chb,minimum width=6.5cm, right=of c2-0](c2-3){Problem Scope}; %%% Carefull!
+%\node[sepline,minimum height=\chb,minimum width=6.5cm, right=of c2-3](c2-4){Problem Requirements};
+%\node[sepline,minimum height=\chb,minimum width=2cm,    right=of c2-4](c2-s){Summary};
+%
+%\node[minimum height=\chc,minimum width=20cm  , draw=black,right=1cm of c3  ](c3-x){}; %Box
+%\node[minimum height=\chc,minimum width=6.5cm, right=1cm of c3  ](c3-0){Background - Hardware};
+%\node[sepline,minimum height=\chc,minimum width=6.5cm, right=of c3-0](c3-1){Background - Software};
+%\node[sepline,minimum height=\chc,minimum width=5cm, right=of c3-1](c3-2){Related Work};
+%\node[sepline,minimum height=\chc,minimum width=2cm,             right=of c3-2](c3-s){Summary};
+%%\node[minimum height=\chc,minimum width=2cm, draw=black,right=of c3-2](c3-3){Related Work};
+%
+%\node[minimum height=\chd,minimum width=20cm,draw=black,right=1cm of c4  ](c4-x){}; %Box
+%\node[minimum height=\chd,minimum width=18cm, right=1cm of c4  ](c4-0){The OIEP Reference Model};
+%\node[sepline,minimum height=\chd,minimum width=2cm,  right=of c4-0](c4-s){Summary};
+%
+%\node[minimum height=\che,minimum width=20cm,draw=black,right=1cm of c5  ](c5-x){}; %Box
+%\node[minimum height=\che,minimum width=18cm, right=1cm of c5  ](c5-0){OIEP architectures};
+%\node[sepline,minimum height=\che,minimum width=2cm,  right=of c5-0](c5-s){Summary};
+%
+%\node[minimum height=\chf,minimum width=20cm,draw=black,right=1cm of c6  ](c6-x){}; %Box
+%\node[minimum height=\chf,minimum width=18cm, right=1cm of c6  ](c6-0){Evaluation};
+%\node[sepline,minimum height=\chf,minimum width=2cm, right=of c6-0](c6-s){Summary};
+%
+%\node[minimum height=\chg,minimum width=20cm,draw=black,right=1cm of c7  ](c7-x){}; %Box
+%\node[minimum height=\chg,minimum width=18cm, right=1cm of c7  ](c7-0){Future Work};
+%\node[sepline,minimum height=\chg,minimum width=2cm, right=of c7-0](c7-s){Summary};
+%
+%\node[minimum height=\chh,minimum width=20cm,draw=black,right=1cm of c8  ](c8-x){}; %Box
+%\node[minimum height=\chh,minimum width=15cm,right =1cm of c8  ](c8-0){Conclusions};
+%\node[sepline,minimum height=\chh,minimum width=05cm,right=of c8-0](c8-s){Summary};
+%
+%
+%%%%% REMOVE IF UGLY: VVVVVV
+%        
+%%\draw[decoration={brace,mirror},decorate] (c1-s)++ (1.5,-\cha) -- node[below=20pt] {} +(0,2*\cha);
+%\draw[decoration={brace,mirror},decorate] (c1-s)++ (1.5,-0.5*\cha +.05) -- node[below=20pt] {} +(0,1*\cha -.05);
+%\node[minimum size=0.05cm,circle, black, draw, xshift=2.25cm](m1) at (c1-s) {\scriptsize{1}};%\small{$^\ast$}};
+%%\node[minimum size=0.15cm,circle, black, draw](a) at(+23.25  , +0.00) {\scriptsize{1}\small{$^\ast$}};
+%
+%%\draw[decoration={brace,mirror},decorate] (22.5,-4.45) -- node[below=20pt] {} (22.5,-1.05);
+%\draw[decoration={brace,mirror},decorate] (c3-s)++ (1.5,-0.5*\chc +.05) -- node[below=20pt] {} +(0,\chc+\chb+\ChGap -.05);
+%\node[minimum size=0.05cm,circle, black, draw, xshift=2.25cm, yshift=-(0.5*(\chb+\ChGap))](m2) at (c2-s) {\scriptsize{2}};%\small{$^\ast$}};
+%%\node[minimum size=0.10cm,circle, black, draw](b) at(+23.25, -2.75) {\scriptsize{2}\small{$^\ast$}};
+%
+%%\draw[decoration={brace,mirror},decorate] (c4-s)++ (1.5,-0.5*\chd -.05) -- node[below=20pt] {} +(0,1*\chd +.05);
+%\draw[decoration={brace,mirror},decorate] (c4-s)++ (1.5,-0.5*\chd +.05) -- node[below=20pt] {} +(0,1*\chd -.05);
+%\node[minimum size=0.05cm,circle, black, draw, xshift=2.25cm](m3) at (c4-s) {\scriptsize{3}};%\small{$^\ast$}};
+%
+%\draw[decoration={brace,mirror},decorate] (c5-s)++ (1.5,-0.5*\che +.05) -- node[below=20pt] {} +(0,1*\che -.05);
+%%\draw[decoration={brace,mirror},decorate] (22.5,-10.45) -- node[below=20pt] {} (22.5,-7.85);
+%\node[minimum size=0.05cm,circle, black, draw, xshift=2.25cm, yshift=(2*0.18*\che)](ma) at (c5-s) {\scriptsize{a}};
+%\node[minimum size=0.05cm,circle, black, draw, xshift=2.25cm, yshift=(1*0.18*\che)](mb) at (c5-s) {\scriptsize{b}};
+%\node[minimum size=0.05cm,circle, black, draw, xshift=2.25cm, yshift=(0*0.18*\che)](mc) at (c5-s) {\scriptsize{c}};
+%\node[minimum size=0.05cm,circle, black, draw, xshift=2.25cm, yshift=(-1*0.18*\che)](md) at (c5-s) {\scriptsize{d}};
+%\node[minimum size=0.05cm,circle, black, draw, xshift=2.25cm, yshift=(-2*0.18*\che)](me) at (c5-s) {\scriptsize{e}};
+%%\node[minimum size=0.05cm,circle, black, draw, xshift=2.25cm, yshift=(.5)](c) at (c5-s) {\scriptsize{2}};
+%%\node[minimum size=0.05cm,circle, black, draw](c) at(+23.25,  -8.25) {\scriptsize{1}};
+%%\node[minimum size=0.05cm,circle, black, draw](c) at(+23.25,  -8.75) {\scriptsize{2}};
+%%\node[minimum size=0.05cm,circle, black, draw](c) at(+23.25,  -9.25) {\scriptsize{3}};
+%%\node[minimum size=0.05cm,circle, black, draw](c) at(+23.25,  -9.75) {\scriptsize{4}};
+%%\node[minimum size=0.05cm,circle, black, draw](c) at(+23.25, -10.25) {\scriptsize{5}};
+%
+%%\draw[decoration={brace,mirror},decorate] (22.5,-13.45) -- node[below=20pt] {} (22.5,-11.45);
+%\draw[decoration={brace,mirror},decorate] (c7-s)++ (1.5,-0.5*\chg +.05) -- node[below=20pt] {} +(0,\chg+\chf+\ChGap -.05);
+%%\node[minimum size=0.20cm,circle, black, draw](d) at(+23.25,-12.40) {\scriptsize{4}\small{$^\ast$}};
+%\node[minimum size=0.05cm,circle, black, draw, xshift=2.25cm, yshift=-(0.5*(\chf+\ChGap))](m4) at (c6-s) {\scriptsize{4}};%\small{$^\ast$}};
+%
+%
+%\node[above=.35cm of c1]  (TitleC) {Chapters};%\small{$^\ast$}};
+%\node[above=.35cm of c1-x](TitleC) {Contents};%\small{$^\ast$}};
+%%\node[above right=.30cm and 0.35cm of c1-x]  (TitleC) {Methods steps};%\small{$^\ast$}};
+%\node[above=.10cm of m1]  (TitleC) {Methods\\steps};%\small{$^\ast$}};
+
+\end{tikzpicture}

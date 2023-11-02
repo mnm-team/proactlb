@@ -1,0 +1,54 @@
+\chapter{From Work Stealing to Reactive Load Balancing}
+\label{ch:wstoreactlb}
+\index{FromWS2ReactLB!From Work Stealing to Reactive Load Balancing}
+\chaptertoc
+\noindent
+
+Based on the overview in Chapter \ref{ch:Introduction}, Chapter \ref{ch:wstoreactlb} provides in more detail terminologies, task-based programming models and runtimes, applications and state-of-the-art related to dynamic load balancing in distributed memory systems. The content of Chapter \ref{ch:wstoreactlb} is summarized in Figure \ref{fig:chapter_two_overview} as an inverted pyramid. First, the top view of parallel computing is shown in Section \ref{sec:preliminaries} and we describe in more detail the concepts as well as terminologies associated with the architecture of distributed memory systems. Second, we go in-depth on how programming models are designed for shared and distributed memory systems in Section \ref{sec:taskbased_prog_models}. Hereby, task-based parallel programming models are emphasized as an instrument to research dynamic load balancing. Following that, task-based parallel runtimes and applications are addressed as the objects introduced in Section \ref{sec:taskbased_runtimes_apps}. Finally, the related work from work stealing to reactive load balancing is analyzed in Section \ref{sec:relatedwork}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=0.75]{./pictures/preliminaries/preli_parallelcomp_overview.pdf}
+	\caption{The overview of Chapter \ref{ch:wstoreactlb}}
+	\label{fig:chapter_two_overview}
+\end{figure}
+
+\section{Preliminaries}
+\label{sec:preliminaries}
+\index{FromWS2ReactLB!Preliminaries}
+\input{content/FromWS2ReactLB_Preliminaries}
+
+% 2.1 Parallel Programming Models
+\section{Task-based Parallel Programming Models}
+\label{sec:taskbased_prog_models}
+\index{FromWS2ReactLB!Parallel Programming Models}
+\input{content/FromWS2ReactLB_Taskbased_Programming_Models}
+
+% 2.2 Task-based Parallel Runtimes and Applications
+\section{Task-based Parallel Runtimes and Applications}
+\label{sec:taskbased_runtimes_apps}
+\index{FromWS2ReactLB!Task-based Parallel Runtimes Apps}
+\input{content/FromWS2ReactLB_Taskbased_Runtimes_Apps}
+
+% 2.3 Load Balancing in Parallel Programs
+\section{Related Work}
+\label{sec:relatedwork}
+\index{FromWS2ReactLB!Related Works}
+\input{content/FromWS2ReactLB_Related_Work}
+
+%\vfill
+%\section*{Chapter Summary}
+%Chapter~\ref{ch:Motivation} provides the motivation, scopes the problem and derives a requirements' analysis for
+%a reference model for \pne management systems for \glspl*{HPC system}.
+%Additionally, the related work is presented.
+%This presents the problem domain analysis according to the methodical approach of this work (see Sec.~\ref{sec:Intro-Method}).
+%
+%\begin{figure}[H]%[ht]
+%    \centering
+%    \resizebox{.98\textwidth}{!}{%
+%        \input{pictures/Thesis-Method-Gray/Thesis-Method-Gray2.tikz}
+%        }
+%        \caption[Method Completion After Chapter 2.]{%
+%            Method completion after Chapter 2.}
+%            \label{fig:Method-Completion2}
+%\end{figure}

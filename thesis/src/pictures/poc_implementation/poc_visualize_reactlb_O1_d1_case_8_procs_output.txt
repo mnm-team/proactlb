@@ -1,0 +1,42 @@
+-------------------------------------------
+Configuration:
+   + num. processes:     8
+   + num. tasks:       800
+   + slowdown:         0.2
+   + num. sld.procs:     2
+   + bandwidth:      1485.0 (MB/s)
+   + exe_rate:         1.0 (task/s)
+-------------------------------------------
+----------------[PROFILING]----------------
+	R0: num.local_tasks=   33, num.remote_tasks=    0
+	R1: num.local_tasks=   33, num.remote_tasks=    0
+	R2: num.local_tasks=   82, num.remote_tasks=   38
+	R3: num.local_tasks=   82, num.remote_tasks=   38
+	R4: num.local_tasks=   81, num.remote_tasks=   42
+	R5: num.local_tasks=   81, num.remote_tasks=   42
+	R6: num.local_tasks=   76, num.remote_tasks=   48
+	R7: num.local_tasks=   76, num.remote_tasks=   48
+----------------[PROFILING]----------------
+	Write profiled queue data to: ./profiled_queues_OBalancing1_ODelay1.csv
+-------------------------------------------
+Simulation results:
+-------------------------------------------
+   + P[  0]: local_load= 165.00(s), remot_load=   0.00(s)
+   + P[  1]: local_load= 165.00(s), remot_load=   0.00(s)
+   + P[  2]: local_load=  82.00(s), remot_load=  72.50(s)
+   + P[  3]: local_load=  82.00(s), remot_load=  72.50(s)
+   + P[  4]: local_load=  81.00(s), remot_load=  75.00(s)
+   + P[  5]: local_load=  81.00(s), remot_load=  75.00(s)
+   + P[  6]: local_load=  76.00(s), remot_load=  81.00(s)
+   + P[  7]: local_load=  76.00(s), remot_load=  81.00(s)
+-------------------------------------------
+Statistic:
+-------------------------------------------
+max. load:   165.0
+min. load:   154.5
+avg. load:   158.1
+R_imb:         0.0
+sum. overloaded_load:     13.8
+sum. underloaded_load:    13.8
+-------------------------------------------
+

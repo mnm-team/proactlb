@@ -1,0 +1,85 @@
+\chapter{A Proactive Approach for Dynamic Load Balancing}
+\label{ch:PADLB}
+\index{PADLB!Proactive Approach for Load Balancing}
+\chaptertoc
+\noindent
+
+This chapter discusses our proactive approach for dynamic load balancing. The goal is ``\textit{more information, better load balancing}''. Almost all static load balancing methods assume to have load information or related information to generate a cost model. Thereby, task migration and task distribution rely on prior knowledge to solve balancing. In dynamic load balancing, we do not rely on prior knowledge. Task migration is mainly based on the most current execution status at runtime, such as queue length and execution speed on each process. However, current status information is insufficient, implying that approaches like work stealing or reactive load balancing are seemingly based on speculation. Obviously, speculative balancing operations can be right or wrong for a given period.\\
+
+\section{Overview}
+\label{sec:PADLB-Overview}
+
+In our proactive approach, we exploit influence factors related to execution status to predict and provide knowledge of task execution time. The knowledge based on load prediction helps to estimate the level of imbalance. We calculate the number of appropriate tasks and potential processes for task offloading. Benefiting from modern computer architectures and task-based programming models, the approach extends reactive load balancing by employing a dedicated thread for:
+
+\begin{itemize}
+	\item Supporting task and system characterization instead of only monitoring queue length.
+	\item Using the characterization information to predict load values at runtime. Instead of missing the prior knowledge before running applications, we can generate new knowledge based on predicted load values, e.g., $w$, $L$.
+	\item Adapting the prediction knowledge to guide task offloading. We calculate the load difference, the number of tasks, and potential process candidates for better offloading tasks.
+\end{itemize}
+
+Our approach is implemented towards a proactive scheme of load balancing, which facilitates different task offloading methods. To be intuitive, Figure \ref{fig:padlb_proact_scheme} shows how this scheme works. The x-coordinate again shows the time progress, while the y-coordinate shows process $P_{i}$ spawning two threads for executing tasks and one dedicated thread for performing load balancing. This thread fits today's modern computing architectures with the increasing number of cores, where one core can be left off to run the dedicated thread (denoted by $T_{comm}$). In practice, our scheme can be deployed through hybrid MPI+OpenMP, which is mostly exploited in various task-based parallel programming models.\\
+
+\begin{figure}[t]
+	\centering
+	\includegraphics[scale=0.7]{./pictures/padlb_approach/padlb_proact_scheme.pdf}
+	\caption{A proactive scheme for task offloading to solve dynamic load balancing in general.}
+	\label{fig:padlb_proact_scheme}
+\end{figure}
+
+In Figure \ref{fig:padlb_proact_scheme}, we suppose that process $P_{i}$ contains two threads, $Thr_{0}$ and $Thr_{1}$, for executing tasks and one dedicated thread, $Tcomm_{i}$, for communication as well as proactive load balancing. Assuming the execution is iterative, which indicates $Iteration_{0}$, then $Iteration_{1}$, and so on. Different from reactive load balancing, $Tcomm_{i}$ in our approach is driven to perform:
+
+\begin{itemize}
+	\item Mainly keeping communication overlapped with computation.
+	\item Characterizing task feature and system information along with the corresponding load values, such as $w$, $L$, core frequency, etc.
+	\item Training a load prediction model at runtime.
+	\item Offloading tasks proactively.
+\end{itemize}
+
+%\begin{figure}[t]
+%  \centering
+%  \includegraphics[scale=0.625]{./pictures/padlb_approach/padlb_three_branches_proact_strategies.pdf}
+%	\caption{Three branches of task offloading strategies for proactive load balancing approach.}
+%	\label{fig:three_branches_proact_strategies}
+%\end{figure}
+
+The above operations are what $Tcomm$ can perform separately from the other threads to facilitate load balancing. Furthermore, we can adapt these operations to specific application and system domains. The following sections show different task offloading methods based on our proactive balancing scheme. Specifically, we show two task offloading methods and one extension for co-scheduling tasks across multiple applications, including:
+
+\begin{itemize}
+	\item Method 1: feedback task offloading. We introduce method 1 in Section \ref{sec:PADLB-FeedbackLB}.
+	\item Method 2: ML-based task offloading, where ``ML-based'' indicates a machine learning based model for online load prediction. Method 2 is described in Section \ref{sec:PADLB-MLbasedTaskOffload}
+	\item Extension: co-scheduling tasks across multiple applications. We address this extension in Section \ref{sec:PADLB-CoschedulingTask}.
+\end{itemize}
+
+% The load value of each task or each process can be predicted on-the-fly. We use the prediction results to generate an adaptive algorithm for proactive task offloading.
+
+% The extension from proactive load balancing: co-scheduling tasks across multiple applications. ``\textit{Co-scheduling}'' in load balancing also indicates migrating tasks from process to process. However, the scope of co-scheduling tasks here is across multiple applications, and task migration might be between different processes from different applications.
+
+% After an iteration, it will share the information about the prediction, and each process can know the load status before a new iteration starts. Hence, each can plan to balance the load in advance.
+ 
+% Section 4.0 different proactive strategies
+%\input{content/PADLB-ProactStrategies}
+
+% Section 4.1 feedback load balancing
+\input{content/PADLB-FeedbackLoadBalancing}
+
+% Section 4.2 ml-based task offloading for LB
+\input{content/PADLB-MLbasedTaskOffload}
+
+% Section 4.3 coscheduling task for LB
+\input{content/PADLB-CoschedulingTask}
+
+
+% While the load balance is expected before running the applications, another challenge could be caused at the system side when some machines/processes can slow down. The unexpected situation needs actions at runtime and faces the challenge of moving tasks around to regain the balance as expected. Suppose there is no prior knowledge to redistribute the tasks. In that case, people have to use work-stealing ideas in principle, and the delay of stealing time on distributed memory is the challenge. Therefore, the approach in this thesis could be described in the inline figure below.\\
+
+% What we can have is usually queue length status and execution speed. The balancing strategies have to decide which tasks are migrated, from which rank to which rank. We know little about the execution speed based on the number of remaining tasks in queues per rank or even per machine. All in all, the outcome of almost balancing solutions resolves around:
+
+%In general, we introduce one proactive approach, which can provide different load-balancing strategies at runtime. The more information we have at runtime, the better strategies we can perform for dynamic load balancing.
+
+%\begin{enumerate}
+%	\item Which process shares tasks to which process?
+%	\item And, how many tasks should be migrated at a time?
+%\end{enumerate}
+
+% We then use the prediction to provide the missing knowledge about load at runtime and guide task offloading. Therefore, as mentioned above, we have partial load information to calculate well (1) and (2). Additionally, we can generate different strategies for task offloading.\\
+
+%From the runtime point of view, we can see that our programs are performed with multiple processes or MPI ranks in distributed memory. In which each process spawns multiple threads to execute tasks, and each thread is pinned to one core. Notably, one dedicated thread is pinned to the last core to perform proactive load balancing. For modern computing architectures today, we have many sockets (even GPU as accelerators) in a single machine; a socket has many cores for parallel processing. At the operating system level, one process can spawn as many threads as recommended to fit the maximum number of physical cores per socket.

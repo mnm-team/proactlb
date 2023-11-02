@@ -1,0 +1,289 @@
+%
+% LaTeX-Rahmen fuer Arbeiten am Lehrstuhl Prof. Dieter Kranzlmueller
+%
+% author: Minh T. Chung, 2021 
+%
+% mainly refer to the latex-src of Matthias Maiterth, 2019
+% and many thanks to Matthias
+% 
+% originaly basierend auf Arbeiten von Martin Metzker, Helmut Reiser,
+% Boris Gruschke, Stephen Heilbronner, Harald Roelle und Nils gentschen Felde
+%
+%-----------------------------------------------------------
+% Other ref styles
+%-----------------------------------------------------------
+%\documentclass[]{scrbook}
+%\documentclass[b5paper,10pt,twoside,DIV=14,BCOR=14mm,appendixprefix]{scrbook}
+%\usepackage{styles/MNMdiss}
+%\usepackage{styles/Titlepage-Dissertation}
+
+\documentclass[a4paper,10pt,twoside,DIV=14,BCOR=14mm,appendixprefix]{scrbook}
+
+\usepackage{styles/Dissertation}
+
+%-----------------------------------------------------------
+% Thesis's Title
+%-----------------------------------------------------------
+\title{\LARGE A Proactive Approach of Co-scheduling Tasks for Dynamic Load Balancing in Parallel Applications}
+
+%-----------------------------------------------------------
+% Authors & Supervisors
+%-----------------------------------------------------------
+\thesis{Dissertation}
+\thesisDeutsch{Dissertation}
+\author{Minh Chung}
+\supervisorA{Prof. Dr. Dieter Kranzlm\"uller}
+\supervisorB{Prof. Dr. Raymond Namyst}
+\supervisorC{}
+\date{2024-01-07} % YYYY-MM-DD Format
+\abgabeTagZahl{07}
+\abgabeMonatText{Jan}
+\abgabeJahrZahl{2024}
+\TerminRigor{07.~January~2024} % Datum Deutsch, TT.MN.JJJJ
+
+\makeatletter
+\let\thetitle\@title
+\let\theauthor\@author
+\makeatother
+
+\renewcommand{\labelitemiii}{$\circ$}
+
+\hypersetup{pdfauthor={Minh Chung},
+            pdftitle={A Proactive Approach of Co-scheduling Tasks for Dynamic Load Balancing in Parallel Applications},
+            pdfsubject={Dissertation},
+            pdfcreator={Minh Chung},
+            pdflang={en-US},
+            pdfkeywords={High Performance Computing} {Co-scheduling} {Task-based Parallel Applications} {Dynamic Load Balancing} {Applied Machine Learning}}
+
+%-----------------------------------------------------------
+% Packages & Pre-defined commands & configuration
+%-----------------------------------------------------------
+\usepackage[utf8]{inputenc} % fuer Umlaute in tex-Dateien
+\usepackage[T5,T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[english]{babel}
+\usepackage{datetime2}
+\usepackage{hyphenat}
+\input{bib/hyphenation}
+
+\usepackage[backend=biber,urldate=iso,date=iso,seconds=true,sorting=nyt,maxbibnames=10,minbibnames=7,style=alphabetic,defernumbers=true]{biblatex}
+
+\usepackage{fancyhdr}
+\usepackage{csquotes}
+\addbibresource{bib/bibfile1.bib}
+%\bibliographystyle{unstr}
+
+\setcounter{secnumdepth}{3} % set to 3 for labeling subsubsections but not paragraphs!
+
+\usepackage{etoc}				% for localtableofcontents
+\etocsettocdepth{3}			% localtableofcontents with depth until subsubsection!
+\usepackage{needspace}	% for quotes to stay on the same page:
+\usepackage{listings}		% for code listing
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage[all]{hypcap}
+\usepackage{glossary-mcols}
+\usepackage[acronym,nopostdot,symbols,toc,automake]{glossaries}
+\renewcommand*{\glsmcols}{2}
+
+% ------------------------------------------------
+% define python style for lsting code (ref: https://www.overleaf.com/learn/latex/Code_listing)
+% ------------------------------------------------
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{pythonstyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=t,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2}
+\lstset{style=pythonstyle}
+
+% for todo notes
+\usepackage{todonotes}
+
+\makeglossaries
+\input{bib/newcommands}
+\loadglsentries[main]{bib/glosfile1}
+\setacronymstyle{long-short}
+
+\usepackage{xpatch}
+\xapptocmd{\appendix}{
+    \addtocontents{toc}{
+        \RedeclareSectionCommand[tocdynnumwidth, tocentrynumberformat=\tocappendixnumber]{chapter}
+    }
+}{}{\PatchFailed}
+\newcommand\tocappendixnumber[1]{\chapapp~#1}
+
+\usepackage{makeidx}
+\makeindex
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\newtheoremstyle{def}{.5\topsep}{.5\topsep}{\addtolength{\leftskip}{1.0em}\addtolength{\rightskip}{2.0em}}{-1.0em}{\bfseries}{.:}{.5em}{}
+\theoremstyle{def}
+\newtheorem*{Def}{Def}
+\makeatletter
+\patchcmd{\endDef}{\@endpefalse}{}{}{}
+\makeatother
+
+% ----------------------------------------------------------
+\usepackage{pifont} % for xmark, checkmark
+\newcommand{\cmark}{\ding{51}}
+\newcommand{\xmark}{\ding{55}}
+% ----------------------------------------------------------
+
+\usepackage[binary-units]{siunitx}
+\usepackage{multicol}	% fuer Tabellenfelder, die sich ueber mehrere Spalten erstrecken
+\usepackage{multirow}	% fuer Tabellenfelder, die sich ueber mehrere Spalten erstrecken
+\setlength\extrarowheight{2pt}
+\usepackage{graphicx,float}
+\usepackage{wrapfig}	% for the wrap figure
+
+\usepackage[normalem]{ulem}
+\usepackage{verbatim}
+\usepackage{textcomp}
+\usepackage{tikz}
+\usetikzlibrary{chains}
+\usetikzlibrary{positioning}
+\usetikzlibrary{calc}
+\usetikzlibrary{shapes}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{backgrounds}
+\usetikzlibrary{snakes}
+\usetikzlibrary{fit}
+\usetikzlibrary{math}
+\usetikzlibrary{patterns}
+
+% for making a circle of text
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=1.0pt] (char) {#1};}}
+
+\usepackage[inline]{enumitem}
+\setlist[enumerate]{itemsep=1pt} % instead of individual \setlength{\itemsep}{1pt}
+\setlist[itemize]{itemsep=1pt}   % instead of individual \setlength{\itemsep}{1pt}
+\interfootnotelinepenalty=10000
+\raggedbottom
+
+\usepackage{subcaption}	% for subfloats
+\usepackage[ruled,vlined]{algorithm2e}  % fuer algorithm-Umgebung, falls die Dokumentenklasse keine aht
+\newcommand\algcommentstyle[1]{\ttfamily\textcolor{blue}{#1}}
+\SetCommentSty{algcommentstyle}
+
+\usepackage[outline]{contour}
+\setcounter{tocdepth}{2} % Begrenzen der Verzeichnistiefe
+\usepackage{setspace}    % Zur Korrektur
+
+\definecolor{aqua}{rgb}{0.0, 1.0, 1.0}
+\newcommand\toworry[1]{~\\*\contour{red}{\textcolor{red}{#1}}\newline}
+\newcommand\towrite[1]{~\\*\contour{aqua}{\textcolor{black}{To write: }}\textcolor{orange}{#1}\newline}
+
+% ------------------------------------------------
+% for defining an emphasized text in a box
+% ------------------------------------------------
+\usepackage{framed} % formal definition
+\definecolor{columbiablue}{rgb}{0.61, 0.87, 1.0}
+\definecolor{shadecolor}{named}{columbiablue}
+
+%-----------------------------------------------------------
+% Begin the document
+%-----------------------------------------------------------
+\begin{document}
+
+\frontmatter
+\maketitle
+\makeerklaerung
+\makeack[nottoc]{Acknowledgments}{content/acknowledgment}
+\makeabstract{Abstract}{./Abstract.txt}
+\makeabstract[nottoc]{Zusammenfassung}{./Zusammenfassung.txt}
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Contents}
+\tableofcontents
+\listoffigures
+\listoftables
+%\input{content/Preface}
+
+\addtocontents{toc}{\protect\contentsline{chapter}{\protect\numberline{}}{}{}}
+
+%-----------------------------------------------------------
+% Main content
+%-----------------------------------------------------------
+\mainmatter
+\glsresetall
+\input{content/Introduction}
+\input{content/FromWS2ReactLB}
+\input{content/PerfModel}
+\input{content/PADLB}
+\input{content/PoC}
+\input{content/Evaluation}
+\input{content/ConclusionFutureWork}
+
+\addtocontents{toc}{\protect\contentsline{chapter}{\protect\numberline{}}{}{}}
+
+\cleardoubleoddpage
+\blankpage
+\clearpage
+
+%-----------------------------------------------------------
+% Appendix
+%-----------------------------------------------------------
+\appendix
+\input{content/Appendix_A}
+\input{content/Appendix_B}
+\input{content/Appendix_C}
+
+\backmatter
+
+%-----------------------------------------------------------
+% Abbreviations
+%-----------------------------------------------------------
+\printglossary[type=\acronymtype,title={Acronyms and Abbreviations}, style={mcolindex}] % for spacing
+\printglossary[]
+\cleardoubleoddpage
+
+%-----------------------------------------------------------
+% Bibliography
+%-----------------------------------------------------------
+\printbibheading
+\addcontentsline{toc}{chapter}{Bibliography}
+The Bibliography is split into four sections:\\
+\begin{itemize}
+    \item Published Resources are labeled by \texttt{<author prefix>} + \texttt{<year>}.
+    %\item Unpublished Resources (one item~\cite{Koenig2019}) also labeled by \texttt{<author prefix>} + \texttt{<year>}.
+    \item Web Resources are labeled by an \texttt{<author>/<organizaiton>} Identifier (without year).
+    \item Meetings/Seminars/Workshops are labeled using \texttt{<Venue Identifier>} + >>\texttt{'}<< + \texttt{<year>}.
+\end{itemize}
+
+\addcontentsline{toc}{section}{Published Resources}
+\printbibliography[nottype=online,heading=subbibliography,title={Published Resources},notkeyword={Meeting},notkeyword={Unpublished},resetnumbers=true]
+
+\addcontentsline{toc}{section}{Unpublished Resources}
+\printbibliography[nottype=online,heading=subbibliography,title={Unpublished Resources},notkeyword={Meeting},keyword={Unpublished},resetnumbers=false]
+
+\addcontentsline{toc}{section}{Online Resources}
+\printbibliography[type=online,heading=subbibliography,title={Online Resources},resetnumbers=true]
+
+\addcontentsline{toc}{section}{Meetings/Seminars/Workshops}
+\newrefcontext[labelprefix=M]
+\printbibliography[type=misc,heading=subbibliography,title={Meetings/Seminars/Workshops},keyword=Meeting,resetnumbers=true]
+
+\printindex
+\cleardoubleoddpage
+\blankpage
+\end{document}

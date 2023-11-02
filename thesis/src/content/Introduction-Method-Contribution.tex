@@ -1,0 +1,18 @@
+\section{Methodology and Contributions}
+\label{sec:intro_method_contribution}
+\index{Intro!MethodologyContribution}
+
+The methodology of this work is derived from experimental research. First, we conduct experiments on micro-benchmarks and real applications with different imbalance levels. Each experiment is deployed in distributed memory systems with and without load balancing at runtime. Second, we profile the execution to analyze the behavior of load balancing. Specifically, we deploy both work stealing and reactive load balancing. Upon thoroughly analyzing their runtime behaviors, we determine that overall performance is still limited, particularly in high imbalance cases. Notably, the decision taking actions in work stealing and reactive load balancing might be insufficient occasionally.\\
+
+To explore a cause-and-effect relationship, we create a vector space of influence parameters. Then, we formulate the problem to support building a performance model for reactive load balancing. Drawing upon the performance model, a simulator is developed for further testing and proving the hypothesis. This methodology motivates us to investigate a new proactive load balancing approach.\\
+
+Concretely, our work contributes a performance model to analyze the efficiency bound of reactive load balancing and work stealing. The model is represented as function $F$, where its inputs are the given information, including the distribution of $T$ tasks on $P$ processes, the load of tasks ($w$), and the constraints under communication such as latency, delay time when tasks are migrated. In $P$ processes, the inputs indicate the number of overloaded and underloaded processes. Following that, the proposed model can analyze performance in case of applying work stealing or reactive load balancing. With our performance model, we create a simulator to leverage the analysis by manipulating variables and collecting quantitative data. \\
+
+Apart from the abstracted model, this work contributes a new proactive approach, in which ``proactive'' can improve dynamic load balancing further by anticipating the future and taking actions in advance. We can offload tasks earlier and thus more proactively. We propose this toward a proactive scheme for a task-based programming model. Our approach divides the main execution of parallel applications into two streams of execution: one is threads for executing tasks and another one is a dedicated thread for proactive load balancing. The dedicated thread is named $Tcomm$, which will manage (1) task characterization, (2) online load prediction, (3) proactive task offloading. (1) and (2) provide load information to better estimating the number of tasks and potential victims for offloading tasks. (3) can be performed with different task offloading methods based on the prediction knowledge. In particular, we show two methods and one extension of co-scheduling tasks:
+\begin{itemize}
+	\item Method 1: feedback task offloading
+	\item Method 2: ML-based (Machine Learning-based) task offloading
+\end{itemize}
+
+The extension is co-scheduling tasks across multiple applications, which is considered as a new scheduling scheme in HPC clusters. For a long-term vision, we can co-schedule tasks from one application to another application during concurrent execution. Taking this into account, the benefit can be not only balancing load but also increasing compute resource utilization.
+
