@@ -1,0 +1,18 @@
+#%Module -*- tcl -*-
+    ##
+    ## libffi-3.3 modulefile
+    ##
+
+module-whatis "Name: libffi-3.3"
+module-whatis "Version: 1.0"
+module-whatis "Category: ~/.modules"
+module-whatis "Description: Lib FFI for Chameleon"
+
+set LIBFFI_HOME     ~/loc-libs/libffi-3.3/build
+set FFI_INCLUDE_DIR ~/loc-libs/libffi-3.3/build/include
+set FFI_LIBRARY_DIR ~/loc-libs/libffi-3.3/build/lib64
+
+prepend-path    LD_LIBRARY_PATH     ${LIBFFI_HOME}/lib64
+prepend-path    LIBRARY_PATH        ${LIBFFI_HOME}/lib64
+prepend-path    INCLUDE             ${LIBFFI_HOME}/include
+prepend-path    CPATH               ${LIBFFI_HOME}/include

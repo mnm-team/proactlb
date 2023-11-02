@@ -1,0 +1,70 @@
+#!/bin/bash
+#SBATCH -J samoa_
+#SBATCH -o job_output/out_%j_r_{{RUN}}_{{CHAMELEON_LIB}}.txt
+#SBATCH -e job_output/err_%j_r_{{RUN}}_{{CHAMELEON_LIB}}.txt
+#SBATCH -D ./
+##SBATCH --mail-type=ALL
+##SBATCH --mail-user=minh.thanh.chung@ifi.lmu.de
+#SBATCH --no-requeue
+#SBATCH --account=pr58ci
+#SBATCH --partition={{PARTITION}}
+#SBATCH --time={{TIME}}
+#SBATCH --nodes={{NODES}}
+##SBATCH --ntasks={{NTASKS}}
+#SBATCH --ntasks-per-node={{NTASKS}}
+#SBATCH --cpus-per-task={{THREADS}}
+#SBATCH --exclusive
+#SBATCH --mem=MaxMemPerNode
+#SBATCH --ear=off
+
+source /etc/profile.d/modules.sh
+
+module load slurm_setup
+module switch python/3.6_intel
+module switch mpi.intel/2019
+module load hwloc/2.0.1
+module load itac
+# module load gcc/9
+
+module use ~/.modules
+module load {{CHAMELEON_LIB}}
+module load libffi-3.3
+
+## create output folders
+## mkdir -p job_output/{{CHAMELEON_LIB}}/{{NODES}}_node/{{NTASKS}}_rankpernode/{{THREADS}}_threadperrank/samoa_output
+## mkdir -p job_output/{{CHAMELEON_LIB}}/{{NODES}}_node/{{NTASKS}}_rankpernode/{{THREADS}}_threadperrank/traces
+
+## do not have permission
+## module use -a /lrz/sys/share/modules/extfiles
+## module add likwid/modified
+
+## unset KMP_AFFINITY
+export KMP_AFFINITY=verbose
+export OMP_PLACES=cores
+export OMP_PROC_BIND=close
+## export OMP_PROC_BIND=true
+## export I_MPI_PIN=1
+## export I_MPI_PIN_DOMAIN=auto
+
+ulimit -s unlimited
+
+
+export OMP_NUM_THREADS={{THREADS}}
+export MIN_REL_LOAD_IMBALANCE_BEFORE_MIGRATION=0.1
+export MAX_TASKS_PER_RANK_TO_MIGRATE_AT_ONCE=1
+export PERCENTAGE_DIFF_TASKS_TO_MIGRATE=0.3
+export MAX_PERCENTAGE_REPLICATED_TASKS={{MAX_PERCENTAGE_REPLICATED_TASKS}}
+export MIN_LOCAL_TASKS_IN_QUEUE_BEFORE_MIGRATION=$(({{THREADS}}*2))
+export CHAMELEON_TOOL_LIBRARIES={{CHAMELEON_TOOL_PATH}}
+# export CHAM_TOOL_DIR="/dss/dsshome1/0A/di49mew/chameleon-scripts/cham_tool/tool_integ_predmodel/build/libtool.so"
+# export LOG_DIR="/hppfs/work/pr58ci/di49mew/chameleon/test_cham_tool/cham_tool_check_load/logs/{{NODES}}_nodes"
+# export SAMOA_EXAMPLE=1
+export NOISE={{NOISE}}
+# export VT_LOGFILE_PREFIX=/hppfs/work/pr58ci/di49mew/chameleon/test_cham_tool/cham_tool_check_load/traces/{{CHAMELEON_LIB}}
+
+echo "Running samoa"
+echo '{{BODY}}'
+
+{{BODY}}
+
+echo "Done"

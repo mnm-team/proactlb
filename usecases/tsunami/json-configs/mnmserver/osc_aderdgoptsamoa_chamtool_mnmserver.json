@@ -1,0 +1,46 @@
+{
+    "app_dir" : "/home/chungmi/samoa/samoa-aderdg-opt",
+    "cache_dir"  : "/home/chungmi/experiments/chamtool_samoaaderdgopt_osc/test_1_node",
+    "command_dir"  : "/home/chungmi/experiments/chamtool_samoaaderdgopt_osc/test_1_node",
+    "build" :{
+        "template"     : "/home/chungmi/chameleon-scripts/config/mnmserver/config_osc_samoaaderdgopt_chamtool_mnmserver.py",
+        "swe_scenario" : "oscillating_lake",
+        "dg_limiter"   : "unlimited",
+        "swe_dg_order" : ["7"],
+        "flux_time_averaging" : "True",
+        "asagi" : "False"
+    },
+    "run":{
+        "chameleon_lib" : { "cartesian" : ["chamtool_pred_mig"]},
+        "template"  :   "/home/chungmi/chameleon-scripts/template/mnmserver/mnmserver_chamtool_samoaaderdgopt_osc.slurm_template",
+        "execute"   :   "mpirun -np ${SLURM_NTASKS}",
+        "submit"            :   "sbatch",
+        "cancel"            :   "scancel",
+        "dmin"              :   ["14"],
+        "dmax"              :   ["14"],
+        "dry_tolerance"     :   "0.000001",
+        "dry_dg_guard"      :   "0.01",
+        "coast_height_max"  :   "-100000",
+        "coast_height_min"  :   "100000",
+        "max_picard_iterations":"4",
+        "max_picard_error"  :   "10.0d-16",
+        "courant"           :   "0.05",
+        "nmax"              :   "50",
+        "time"              :   "01:00:00",
+        "run"               :   {"cartesian": ["1"]},
+        "nodes"             :   ["1"],
+        "ntasks"            :   ["8"],
+        "threads"           :   ["2"],
+        "sections"          :   "16",
+        "partition"         :   "projekt03",
+        "output_base"       :   "samoa_output",
+        "joboutput": {
+            "expression": "nodes_t_threads_dmi_dmin_dma_dmax_r_run_repf_max_percentage_replicated_tasks_chameleon_lib.txt",
+            "placeholders": ["dmin", "dmax", "nmax", "run", "nodes", "threads", "chameleon_lib", "max_percentage_replicated_tasks"]
+        },
+        "max_percentage_replicated_tasks" : {"cartesian": ["1"]}
+    },
+    "post": {
+        "post_call": ""
+    }
+}

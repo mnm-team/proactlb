@@ -1,0 +1,14 @@
+{
+    "context_info": {
+        "balancing_ops_cost": 4,
+        "clock_rate": 1000,
+        "execution_rate": 1,
+        "migration_delay_cost": 400,
+        "noise": 4,
+        "num_iterations": 2,
+        "num_process": 16,
+        "num_slowdown_rank": 5,
+        "num_tasks_per_rank": 100,
+        "slowdown_scale": 0.2
+    }
+}

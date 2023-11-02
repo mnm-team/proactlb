@@ -1,0 +1,25 @@
+mpirun -n ${SLURM_NTASKS} -ppn 1 --host ice1,ice2 /home/ra56kop/loc-libs/osu-micro-benchmarks-7.0.1/install/libexec/osu-micro-benchmarks/mpi/pt2pt/osu_latency -m 128:268435456
+# OSU MPI Latency Test v7.0
+# Size          Latency (us)
+128                     1.76
+256                     2.29
+512                     2.28
+1024                    2.42
+2048                    3.11
+4096                    3.91
+8192                    4.78
+16384                   6.80
+32768                   8.69
+65536                  11.52
+131072                 16.70
+262144                 26.99
+524288                 43.52
+1048576                49.72
+2097152                94.77
+4194304               184.75
+8388608               364.72
+16777216              724.51
+33554432             1444.33
+67108864             2883.69
+134217728            5762.51
+268435456           11521.19

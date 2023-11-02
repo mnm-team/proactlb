@@ -1,0 +1,59 @@
+{
+    "app_dir" : "/dss/dsshome1/lxc0D/ra56kop/samoa/samoa-aderdg-opt",
+    "cache_dir"  : "/dss/dsshome1/lxc0D/ra56kop/experiment-results/cham_samoaaderdgopt_okushiri/cm2large",
+    "command_dir"  : "/dss/dsshome1/lxc0D/ra56kop/experiment-results/cham_samoaaderdgopt_okushiri/cm2large",
+    "build" :{
+        "template"      : "/dss/dsshome1/lxc0D/ra56kop/chameleon-scripts/config/coolmuc/config_okushiri_samoaaderdgopt_cham_coolmuc.py",
+        "swe_scenario"  : "asagi",
+        "dg_limiter"    : "all",
+        "swe_dg_order"  : ["7"],
+        "flux_time_averaging" : "true",
+        "boundary"      : "file",
+        "asagi"         : "True",
+        "asagi_dir"     : "/dss/dsshome1/lxc0D/ra56kop/local_libs/ASAGI/install",
+        "arch"          : "dskx",
+        "openmp"        : "notasks",
+        "xdmf"          : "true"
+    },
+    "run":{
+        "chameleon_lib" : { "cartesian" : ["intel_commthread", "intel_mig", "intel_rep3_mig", "intel_rep3_nomig"]},
+        "template"  :   "/dss/dsshome1/lxc0D/ra56kop/chameleon-scripts/template/coolmuc/coolmuc_cham_samoaaderdgopt_xdmfasagi_okushiri.slurm_template",
+        "execute"   :   "mpirun -np ${SLURM_NTASKS}",
+        "submit"            :   "sbatch",
+        "cancel"            :   "scancel",
+        "dmin"              :   ["19"],
+        "dmax"              :   ["19"],
+        "dry_tolerance"     :   "0.0001d0",
+        "dry_dg_guard"      :   "0.001d0",
+        "bath"              :   "/dss/dsshome1/lxc0D/ra56kop/chameleon-scripts/samoa-data/okushiri/bathymetry_okushiri.nc",
+        "disp"              :   "/dss/dsshome1/lxc0D/ra56kop/chameleon-scripts/samoa-data/okushiri/displacement_okushiri.nc",
+        "static_displacement":  "",
+        "boundary_side"     :   "3",
+        "boundary_file"     :   "/dss/dsshome1/lxc0D/ra56kop/chameleon-scripts/samoa-data/okushiri/boundary_okushiri.csv",
+        "coast_height_min"  :   "-0.02d0",
+        "coast_height_max"  :   " 2.00d0",
+        "max_picard_iterations": "4",
+        "max_picard_error"  :   "10.0d-16",
+        "limiter_buffer"    :   "0.001d0",
+        "courant"           :   "0.3d0",
+        "tmax"              :   "40",
+        "tout"              :   "20.0",
+        "nmax"              :   {"cartesian": ["100"]},
+        "time"              :   "02:00:00",
+        "run"               :   {"cartesian": ["1"]},
+        "nodes"             :   ["32","64"],
+        "ntasks"            :   ["2"],
+        "threads"           :   ["13"],
+        "sections"          :   "16",
+        "partition"         :   "cm2_large",
+        "output_base"       :   "samoa_output",
+        "joboutput": {
+            "expression": "nodes_t_threads_dmi_dmin_dma_dmax_r_run_repf_max_percentage_replicated_tasks_chameleon_lib.txt",
+            "placeholders": ["dmin", "dmax", "nmax", "run", "nodes", "threads", "chameleon_lib", "max_percentage_replicated_tasks"]
+        },
+        "max_percentage_replicated_tasks" : {"cartesian": ["1"]}
+    },
+    "post": {
+        "post_call": ""
+    }
+}

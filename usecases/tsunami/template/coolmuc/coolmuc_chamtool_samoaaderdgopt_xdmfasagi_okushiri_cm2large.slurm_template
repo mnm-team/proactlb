@@ -1,0 +1,79 @@
+#!/bin/bash
+#SBATCH -J proact_mig
+#SBATCH -o job_output/out_%j_r_{{RUN}}_{{CHAMELEON_LIB}}.txt
+#SBATCH -e job_output/err_%j_r_{{RUN}}_{{CHAMELEON_LIB}}.txt
+#SBATCH -D ./
+#SBATCH --get-user-env
+#SBATCH --clusters=cm2
+#SBATCH --partition={{PARTITION}}
+#SBATCH --qos={{PARTITION}}
+#SBATCH --time={{TIME}}
+#SBATCH --nodes={{NODES}}
+#SBATCH --ntasks-per-node={{NTASKS}}
+#SBATCH --cpus-per-task={{THREADS}}
+#SBATCH --mem=MaxMemPerNode
+##SBATCH --ntasks={{NTASKS}}
+
+source /etc/profile.d/modules.sh
+module load slurm_setup
+
+module use ~/.modules
+module use ~/local_libs/spack/share/spack/modules/linux-sles15-haswell
+module load hwloc-2.4.1-oneapi-2021.1-rrkvihp
+module load libffi-3.3-oneapi-2021.1-3vomiwb
+module load cereal-1.3.0-gcc-7.5.0-jwb3bux ## built by spack
+module load boost-1.76.0-gcc-7.5.0-fromrfo ## built with local-spack
+module load hdf5-1.10.4         ## built with oneapi/2021
+module load armadillo-10.4.0    ## built with oneapi/2021
+module load ensmallen-2.16.2    ## built with oneapi/2021
+module load mlpack-3.4.2        ## built with oneapi/2021
+module load netcdf-hdf5-all/4.6_hdf5-1.10-intel19-impi
+module load asagi
+module load fox
+module load loc-util-loggers
+module load {{CHAMELEON_LIB}}
+
+## do not have permission
+## module use -a /lrz/sys/share/modules/extfiles
+## module add likwid/modified
+
+# export KMP_AFFINITY=verbose
+unset KMP_AFFINITY
+export OMP_PLACES=cores
+export OMP_PROC_BIND=true
+export I_MPI_PIN=1
+export I_MPI_PIN_DOMAIN=auto
+
+ulimit -s unlimited
+
+## for new mpi version which does not support a sufficient number of tags
+export MPIR_CVAR_CH4_OFI_TAG_BITS=30
+export MPIR_CVAR_CH4_OFI_RANK_BITS=8
+
+## for samoa configs with osc-test
+##      + default num_sections = 16
+##      + current num time-steps = 100
+export TASKS_PER_RANK=$(({{THREADS}}*16))
+export EST_NUM_ITERS=100
+export TIME2TRAIN=20
+
+## for chameleon configs
+export OMP_NUM_THREADS={{THREADS}}
+export MIN_REL_LOAD_IMBALANCE_BEFORE_MIGRATION=0.1
+export MAX_TASKS_PER_RANK_TO_MIGRATE_AT_ONCE=1
+export PERCENTAGE_DIFF_TASKS_TO_MIGRATE=0.3
+export MAX_PERCENTAGE_REPLICATED_TASKS={{MAX_PERCENTAGE_REPLICATED_TASKS}}
+export MIN_LOCAL_TASKS_IN_QUEUE_BEFORE_MIGRATION=$(({{THREADS}}*2))
+export NOISE={{NOISE}}
+export SAMOA_EXAMPLE=1
+export CHAMELEON_TOOL=1
+export CHAMELEON_TOOL_SUPPORT=1
+export CHAMELEON_TOOL_LIBRARIES="/dss/dsshome1/lxc0D/ra56kop/chameleon-scripts/cham_tools/load_pred_tool/build/libtool.so"
+export LOG_DIR="/dss/dsshome1/lxc0D/ra56kop/experiment-results/chamtool_samoaaderdgopt_okushiri/cm2large/logs/{{NODES}}_nodes_{{CHAMELEON_LIB}}"
+
+echo "Running samoa"
+echo '{{BODY}}'
+
+{{BODY}}
+
+echo "Done"

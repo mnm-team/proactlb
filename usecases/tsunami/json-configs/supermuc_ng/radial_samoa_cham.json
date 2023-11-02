@@ -1,0 +1,34 @@
+{
+    "app_dir" : "/dss/dsshome1/0A/di49mew/samoa-chameleon",
+    "cache_dir"  : "/dss/dsshome1/0A/di49mew/chameleon-scripts/test_replication/results/swe_upscaling_radial_chameleon",
+    "command_dir"  : "/dss/dsshome1/0A/di49mew/chameleon-scripts/test_replication/results/swe_upscaling_radial_chameleon",
+    "build" :{
+        "template"     : "/dss/dsshome1/0A/di49mew/chameleon-scripts/config/samoa_chameleon.py",
+        "swe_scenario" : "radial_dam_break"
+    },
+    "run":{
+        "chameleon_lib" : { "cartesian" : ["chameleon-intel-rep2"]},
+        "template" : "/dss/dsshome1/0A/di49mew/chameleon-scripts/template/supermuc_chameleon.slurm_template",
+        "execute"  : "mpiexec -np ${SLURM_NTASKS}",
+        "submit"   : "sbatch",
+        "cancel"   : "scancel",
+        "dmin"     : [ "22"],
+        "dmax"     : [ "22"],
+        "nmax"     : "1000",
+        "time"      : "01:30:00",
+        "run"       : { "cartesian": ["1"]},
+        "nodes"     :  ["2","4"],
+        "ntasks"    :  ["2","4"],
+        "threads"   : ["47"],
+        "sections"  : "16",
+        "partition" : "micro",
+        "joboutput": {
+            "expression": "nodes_run_chameleon_lib.txt",
+            "placeholders": ["run", "nodes", "chameleon_lib"]
+        },
+        "max_percentage_replicated_tasks" : "0.5"
+    },
+    "post": {
+        "post_call": ""
+    }
+}

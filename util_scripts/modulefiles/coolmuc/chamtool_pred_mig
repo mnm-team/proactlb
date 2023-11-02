@@ -1,0 +1,16 @@
+#%Module -*- tcl -*-
+    ##
+    ## mod_chameleon with tools modulefile
+    ##
+
+module-whatis "Name: chamtool_pred_mig"
+module-whatis "Version: 1.0"
+module-whatis "Category: ~/.modules"
+module-whatis "Description: A version of the task-based Chameleon lib with cb-tools"
+
+set CHAMELEON_HOME  ~/chameleon_tool_dev/install/chamtool_pred_mig
+
+prepend-path    LD_LIBRARY_PATH     ${CHAMELEON_HOME}/lib
+prepend-path    LIBRARY_PATH        ${CHAMELEON_HOME}/lib
+prepend-path    INCLUDE             ${CHAMELEON_HOME}/include
+prepend-path    CPATH               ${CHAMELEON_HOME}/include

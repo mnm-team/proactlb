@@ -1,0 +1,46 @@
+{
+    "app_dir" : "/dss/dsshome1/00/di46nig/samoa/samoa-aderdg-opt",
+    "cache_dir"  : "/hppfs/work/pn73yo/di46nig/chameleon_experiments/chamtool_samoaaderdgopt_osc/sng_general",
+    "command_dir"  : "/hppfs/work/pn73yo/di46nig/chameleon_experiments/chamtool_samoaaderdgopt_osc/sng_general",
+    "build" :{
+        "template"     : "/dss/dsshome1/00/di46nig/chameleon-scripts/config/sng/config_osc_samoaaderdgopt_chamtool.py",
+        "swe_scenario" : "oscillating_lake",
+        "dg_limiter"   : "unlimited",
+        "swe_dg_order" : ["7"],
+        "flux_time_averaging" : "True",
+        "asagi" : "False"
+    },
+    "run":{
+        "chameleon_lib" : { "cartesian" : ["chamtool_mig"]},
+        "template"  :   "/dss/dsshome1/00/di46nig/chameleon-scripts/template/sng/sng_chamtool_samoaaderdgopt_osc_snggeneral.slurm_template",
+        "execute"   :   "mpirun -np ${SLURM_NTASKS}",
+        "submit"            :   "sbatch",
+        "cancel"            :   "scancel",
+        "dmin"              :   ["18"],
+        "dmax"              :   ["18"],
+        "dry_tolerance"     :   "0.000001",
+        "dry_dg_guard"      :   "0.01",
+        "coast_height_max"  :   "-100000",
+        "coast_height_min"  :   "100000",
+        "max_picard_iterations":"4",
+        "max_picard_error"  :   "10.0d-16",
+        "courant"           :   "0.05",
+        "nmax"              :   "50",
+        "time"              :   "02:00:00",
+        "run"               :   {"cartesian": ["1"]},
+        "nodes"             :   ["32","64","128"],
+        "ntasks"            :   ["2"],
+        "threads"           :   ["23"],
+        "sections"          :   "16",
+        "partition"         :   "general",
+        "output_base"       :   "samoa_output",
+        "joboutput": {
+            "expression": "nodes_t_threads_dmi_dmin_dma_dmax_r_run_repf_max_percentage_replicated_tasks_chameleon_lib.txt",
+            "placeholders": ["dmin", "dmax", "nmax", "run", "nodes", "threads", "chameleon_lib", "max_percentage_replicated_tasks"]
+        },
+        "max_percentage_replicated_tasks" : {"cartesian": ["0"]}
+    },
+    "post": {
+        "post_call": ""
+    }
+}

@@ -1,0 +1,45 @@
+{
+    "app_dir" : "/dss/dsshome1/0A/di49mew/samoa-aderdg-opt/samoa",
+    "cache_dir"  : "/hppfs/work/pr58ci/di49mew/chameleon/results_revision/osc_newaderdgsamoa_16nodes_23thr_test",
+    "command_dir"  : "/hppfs/work/pr58ci/di49mew/chameleon/results_revision/osc_newaderdgsamoa_16nodes_23thr_test",
+    "build" :{
+        "template"     : "/dss/dsshome1/0A/di49mew/chameleon-scripts/config/config_osc_aderdgsamoa_philipp_test.py",
+        "swe_scenario" : "oscillating_lake",
+        "dg_limiter"   : "unlimited",
+        "swe_dg_order" : ["7"],
+        "flux_time_averaging" : "True",
+        "asagi" : "False"
+    },
+    "run":{
+        "chameleon_lib" : { "cartesian" : [ "intel_no_commthread"]},
+        "template" : "/dss/dsshome1/0A/di49mew/chameleon-scripts/template/supermuc_aderdgsamoa_chameleon_philipp_test.slurm_template",
+        "execute"  : "mpiexec -np ${SLURM_NTASKS}",
+        "submit"   : "sbatch",
+        "cancel"   : "scancel",
+        "dmin"     : ["22"],
+        "dmax"     : ["22"],
+        "dry_tolerance" : "0.000001",
+        "dry_dg_guard" : "0.01",
+        "coast_height_max" : "-100000",
+        "coast_height_min" : "100000",
+        "courant" : "0.05",
+        "max_picard_iterations": "4",
+        "max_picard_error" : "10.0d-16",
+        "nmax"      : "20",
+        "time"      : "00:30:00",
+        "run"       : { "cartesian": ["1"]},
+        "nodes"     : ["16"],
+        "ntasks"    : ["32"],
+        "threads"   : { "cartesian": ["24"]},
+        "sections"  : "16",
+        "partition" : "test",
+        "joboutput": {
+            "expression": "nodes_t_threads_dmi_dmin_dma_dmax_r_run_ord_swe_dg_order_chameleon_lib_partition.txt",
+            "placeholders": ["dmin", "dmax", "run", "nodes","threads", "chameleon_lib", "swe_dg_order", "partition"]
+        },
+        "max_percentage_replicated_tasks" : {"cartesian": ["1"]}
+    },
+    "post": {
+        "post_call": ""
+    }
+} 

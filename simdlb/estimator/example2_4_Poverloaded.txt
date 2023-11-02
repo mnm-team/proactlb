@@ -1,0 +1,6 @@
+num_process: 8
+num_tasks: 800
+slowdown: 0.167
+num_sld_processes: 4
+bandwidth: 1485 MB/s
+exe_rate: 1.0 task/s

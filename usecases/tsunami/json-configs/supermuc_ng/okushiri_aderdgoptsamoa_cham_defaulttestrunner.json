@@ -1,0 +1,58 @@
+{
+    "samoa_dir" : "/dss/dsshome1/0A/di49mew/samoa-aderdg-opt/samoa",
+    "cache_dir"  : "/hppfs/work/pr58ci/di49mew/chameleon/results_revision/okushiri_aderdgsamoa_16nodes_testrunner",
+    "command_dir"  : "/hppfs/work/pr58ci/di49mew/chameleon/results_revision/okushiri_aderdgsamoa_16nodes_testrunner",
+    "build" :{
+        "template"      : "/dss/dsshome1/0A/di49mew/chameleon-scripts/config/config_okushiri_defaulttestrunner_supermucng.py",
+        "swe_scenario"  : "asagi",
+        "asagi"         : "true",
+        "asagi_dir"     : "/dss/dsshome1/0A/di49mew/loc-libs/ASAGI/install",
+        "boundary"      : "file",
+        "swe_dg_order"  : ["7"],
+        "chameleon"     : "0",
+        "dg_limiter"    : "all",
+        "compiler"      : "intel",
+        "arch"          : "dskx",
+        "openmp"        : "notasks",
+        "xdmf"          : "True"
+    },
+    "run":{
+        "template"      :   "/dss/dsshome1/0A/di49mew/chameleon-scripts/template/supermuc_aderdgsamoa_defaulttestrunner.slurm_template",
+        "execute"       :   "mpirun -np ${SLURM_NTASKS}",
+        "submit"            :   "sbatch",
+        "cancel"            :   "scancel",
+        "dmin"              :   ["14"],
+        "dmax"              :   ["14"],
+        "dry_tolerance"     :   "0.0001d0",
+        "dry_dg_guard"      :   "0.001d0",
+        "bath"              :   "/dss/dsshome1/0A/di49mew/chameleon-scripts/samoa-data/okushiri/bathymetry_okushiri.nc",
+        "disp"              :   "/dss/dsshome1/0A/di49mew/chameleon-scripts/samoa-data/okushiri/displacement_okushiri.nc",
+        "static_displacement":  "",
+        "boundary_side"     :   "3",
+        "boundary_file"     :   "/dss/dsshome1/0A/di49mew/chameleon-scripts/samoa-data/okushiri/boundary_okushiri.csv",
+        "coast_height_min"  :   "-0.02d0",
+        "coast_height_max"  :   " 2.00d0",
+        "max_picard_iterations": "4",
+        "max_picard_error"  :   "10.0d-16",
+        "limiter_buffer"    :   "0.001d0",
+        "courant"           :   "0.3d0",
+        "tmax"              :   "40",
+        "tout"              :   "0.05d0",
+        "nmax"              :   "100",
+        "time"              :   "00:30:00",
+        "run"               :   {"cartesian": ["1"]},
+        "nodes"             :   ["16"],
+        "ntasks"            :   ["16"],
+        "threads"           :   ["48"],
+        "sections"          :   "16",
+        "partition"         :   "test",
+        "output_dir"        :   "samoa_output",
+        "joboutput": {
+            "expression": "nodes_t_threads_dmi_dmin_dma_dmax_r_run_repf.txt",
+            "placeholders": ["dmin", "dmax", "nmax", "run", "nodes", "threads"]
+        }
+    },
+    "post": {
+        "post_call": ""
+    }
+}

@@ -1,0 +1,58 @@
+#!/bin/bash
+#SBATCH -J samoa_
+#SBATCH -o job_output/out_%j_r_{{RUN}}_{{CHAMELEON_LIB}}.txt
+#SBATCH -e job_output/err_%j_r_{{RUN}}_{{CHAMELEON_LIB}}.txt
+#SBATCH -D ./
+##SBATCH --mail-type=ALL
+##SBATCH --mail-user=minh.thanh.chung@ifi.lmu.de
+#SBATCH --no-requeue
+#SBATCH --account=pr58ci
+#SBATCH --partition={{PARTITION}}
+#SBATCH --time={{TIME}}
+#SBATCH --nodes={{NODES}}
+##SBATCH --ntasks={{NTASKS}}
+#SBATCH --ntasks-per-node={{NTASKS}}
+#SBATCH --cpus-per-task={{THREADS}}
+#SBATCH --exclusive
+#SBATCH --mem=MaxMemPerNode
+#SBATCH --ear=off
+
+source /etc/profile.d/modules.sh
+
+module load slurm_setup
+
+module use ~/.modules
+module unload intel-mpi/2019-intel 
+module unload intel/19.0.5 
+module unload intel-mkl/2019 
+module load intel-oneapi
+module load hwloc/2.2.0-gcc8
+module load libffi-3.3-lrz-spack
+module load netcdf-hdf5-all/4.6_hdf5-1.10-gcc8-impi
+module load loc-util-loggers
+module load asagi
+module load fox
+module load {{CHAMELEON_LIB}}
+
+unset KMP_AFFINITY
+export OMP_PLACES=cores
+export OMP_PROC_BIND=true
+export I_MPI_PIN=1
+export I_MPI_PIN_DOMAIN=auto
+
+ulimit -s unlimited
+
+export OMP_NUM_THREADS={{THREADS}}
+export MIN_REL_LOAD_IMBALANCE_BEFORE_MIGRATION=0.1
+export MAX_TASKS_PER_RANK_TO_MIGRATE_AT_ONCE=1
+export PERCENTAGE_DIFF_TASKS_TO_MIGRATE=0.3
+export MAX_PERCENTAGE_REPLICATED_TASKS={{MAX_PERCENTAGE_REPLICATED_TASKS}}
+export MIN_LOCAL_TASKS_IN_QUEUE_BEFORE_MIGRATION=$(({{THREADS}}*2))
+export CHAMELEON_TOOL_LIBRARIES={{CHAMELEON_TOOL_PATH}}
+
+echo "Running samoa"
+echo '{{BODY}}'
+
+{{BODY}}
+
+echo "Done"

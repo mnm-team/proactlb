@@ -1,0 +1,18 @@
+#%Module -*- tcl -*-
+    ##
+    ## itac_coolmuc modulefile
+    ##
+
+module-whatis "Name: itac"
+module-whatis "Version: 2019"
+module-whatis "Category: ~/.modules"
+module-whatis "Description: Trace-Tool from Intel"
+
+set ITAC_HOME   /lrz/sys/intel/studio2019_u5/itac/2019.5.041
+set ITAC_INCLUDE_DIR /lrz/sys/intel/studio2019_u5/itac/2019.5.041/include
+set ITAC_LIBRARY_DIR /lrz/sys/intel/studio2019_u5/itac/2019.5.041/lib
+
+prepend-path    LD_LIBRARY_PATH     ${LIBFFI_HOME}/lib
+prepend-path    LIBRARY_PATH        ${LIBFFI_HOME}/lib
+prepend-path    INCLUDE             ${LIBFFI_HOME}/include
+prepend-path    CPATH               ${LIBFFI_HOME}/include

@@ -1,0 +1,16 @@
+#%Module -*- tcl -*-
+    ##
+    ## origin chameleon without tools modulefile
+    ##
+
+module-whatis "Name: intel_no_commthread"
+module-whatis "Version: 1.0"
+module-whatis "Category: ~/.modules"
+module-whatis "Description: A version of the task-based Chameleon lib"
+
+set CHAMELEON_HOME  ~/chameleon/install/intel_no_commthread
+
+prepend-path    LD_LIBRARY_PATH     ${CHAMELEON_HOME}/lib
+prepend-path    LIBRARY_PATH        ${CHAMELEON_HOME}/lib
+prepend-path    INCLUDE             ${CHAMELEON_HOME}/include
+prepend-path    CPATH               ${CHAMELEON_HOME}/include

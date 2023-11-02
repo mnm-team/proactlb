@@ -1,0 +1,16 @@
+#%Module -*- tcl -*-
+    ##
+    ## intel_rep_3_mig_aprio modulefile
+    ##
+
+module-whatis "Name: intel_rep_3_mig_aprio"
+module-whatis "Version: 1.0"
+module-whatis "Category: ~/.modules"
+module-whatis "Description: A version of the task-based Chameleon lib"
+
+set CHAMELEON_HOME  ~/chameleon/install
+
+prepend-path    LD_LIBRARY_PATH     ${CHAMELEON_HOME}/intel_rep_3_mig/lib
+prepend-path    LIBRARY_PATH        ${CHAMELEON_HOME}/intel_rep_3_mig/lib
+prepend-path    INCLUDE             ${CHAMELEON_HOME}/intel_rep_3_mig/include
+prepend-path    CPATH               ${CHAMELEON_HOME}/intel_rep_3_mig/include
