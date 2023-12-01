@@ -18,8 +18,26 @@
 
 ![Example 1](./figures/rebalancing_formulation.png)
 
+## A try for QUBO formulation
+
+* Given $n$ tasks with execution time/load: $\{t_{0}, t_{1}, ..., t_{n-1}\}$
+* Given a distribution on $m$ processes: $\{P_{0}, P_{1}, ..., P_{m-1}\}$.
+* Binary variables following the given tasks: $\{x_{0}, x_{1}, ..., x_{n-1}\}$
+* According the given information we know the load imbalance, e.g.,
+    + In the above example, $n = 20$ tasks, $m = 4$ processes, tasks are binarized $\{x_{0}, x_{1}, ..., x_{19}\}$.
+    + We know that: $P_{0}, P_{2}$ are underloaded processes, $P_{1}, P_{3}$ are overloaded.
+    + Assume task migration happens, we have the objective function:
+
+        `minimize` $y = \sum_{i \in n_{0}} t_{i} x_{i} + \sum_{i \in n_{2}} t_{i} x_{i} - (\sum_{i \in n_{1}} t_{i} x_{i} + \sum_{i \in n_{3}} t_{i} x_{i})$
+
+        where, $\{n_{0}, n_{1}, ..., n_{m-1}\}$ is a new subset of tasks on each process.
+    
+    + The constraints include:
+
+        $n_{0} + n_{1} + n_{2} + n_{3} = n$
+
+        $n_{0} \leq k_{0}$, $n_{1} \leq k_{1}$, $n_{2} \leq k_{2}$, $n_{3} \leq k_{3}$, with $k_{i}$ is the maximun number of tasks that a process $i$ can hold.
+
 ## Another way to formulate the problem
 
 * Transform to multi-partition problem
-
-* 
